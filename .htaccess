@@ -32,7 +32,7 @@ AddEncoding gzip svgz
 
   # IGNORE THESE FILES
   IndexIgnoreReset ON
-  IndexIgnore .ftpquota .DS_Store .git
+  IndexIgnore .ftpquota .DS_Store .git .??*
 
   # DEFAULT ICON
   DefaultIcon /fancy-index/icons/file-text.svg
@@ -63,7 +63,7 @@ AddEncoding gzip svgz
   AddIcon /fancy-index/icons/postcss.svg postcss.config.js *.postcssrc *.postcssrc.json *.postcssrc.js *.postcssrc.yml
   AddIcon /fancy-index/icons/grunt.svg gruntfile.js Gruntfile.js
   AddIcon /fancy-index/icons/gulp.svg gulpfile.js Gulpfile.js
-  AddIcon /fancy-index/icons/js.svg .js
+  AddIcon /fancy-index/icons/gulp.svg .js
   AddIcon /fancy-index/icons/composer.svg composer.json composer.lock composer.phar
   AddIcon /fancy-index/icons/bower.svg bower.json
   AddIcon /fancy-index/icons/npm.svg package.json package-lock.json
