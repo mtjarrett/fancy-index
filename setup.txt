@@ -1,0 +1,21 @@
+1. Clone `fancy-index` repo into /var/www/html or sub directory as desired (instructions will assume this directory).
+
+2. Move `images`, `thumbnailer.py`, and `.htaccess` up one level (/var/www/html).
+
+3. Edit /etc/httpd/conf.d/welcome.conf so that every line is commented out.
+
+4. Edit /etc/httpd/conf.d/userdir.conf so that the final lines read:
+<Directory "/var/www/html">
+    AllowOverride All
+    Options MultiViews Indexes FollowSymLinks
+    Require all granted
+</Directory>
+
+5. Restart httpd
+
+6. Run /var/www/html/thumbnailer.py so that thumbnails in `images` will appear.
+
+7a. Create cron job to run /var/www/html/thumbnailer.py.
+7b. Manually run /var/www/html/thumbnailer.py after each change to `images` directory.
+
+8. Drink all the beer!
