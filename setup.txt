@@ -16,6 +16,7 @@
 6. Run /var/www/html/thumbnailer.py so that thumbnails in `images` will appear.
 
 7a. Create cron job to run /var/www/html/thumbnailer.py.
+      ex.  * 16 * * * /usr/bin/python /var/www/html/thumbnailer.py
 7b. Manually run /var/www/html/thumbnailer.py after each change to `images` directory.
 
 8. Drink all the beer!
