@@ -18,6 +18,7 @@ I'm going to assume you're using a `Sites` folder with apache, but it could be d
 1. Clone or download the files.
 2. Add them to your `Sites` directory. The structure should be `/Users/USERNAME/Sites/fancy-index`.
 3. Copy the `.htaccess` file up one directory to `/Users/USERNAME/Sites/.htaccess`.
+3b. Move the `images` directory and `thumbnailer.py` up one level. Consider creating cron job for `thumbnailer.py`.
 4. Update your `DocumentRoot` in `/etc/apache2/users/USERNAME.conf` to point to your `Sites`. This will also cause `localhost` to point to `Sites` and you won't have to use the `~USERNAME` to access it.
 
 This is what mine looks like:
@@ -31,6 +32,8 @@ DocumentRoot "/Users/glen.cheney/Sites"
 </Directory>
 
 ```
+
+5. Update `welcome.conf` file by commenting everything out.
 
 Now restart apache `sudo apachectl restart`.
 
