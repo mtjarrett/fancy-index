@@ -35,13 +35,13 @@ function fixTable() {
     || thumb=='gif'
     || thumb=='tiff'
     || thumb=='bmp') {      
-      //if image is in the 'img' file, then it will use the image from '.thumbnails' as its thumbnail
+      //if image is in the 'images' file, then it will use the image from '.thumbnails' as its thumbnail
       var image = document.createElement("img");      
-      image.setAttribute("src",".thumbnails/thumb." + thumbnail.split("img/").pop());
+      image.setAttribute("src",".thumbnails/thumb." + thumbnail.split("images/").pop());
       image.setAttribute("onerror","this.onerror=null;this.src='../../fancy-index/icons/file-media.svg';")
       
       //all other files will use themselves as a thumbnail
-      if(thumbnail.split('localhost/').pop().slice(0,3) != "img"){
+      if(thumbnail.split('localhost/').pop().slice(0,6) != "images"){
         image.setAttribute("src",fileColumn.firstElementChild);
       }
       
