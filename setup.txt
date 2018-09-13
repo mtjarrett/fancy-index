@@ -13,7 +13,7 @@
 
 5. Restart httpd
 
-6. Run /var/www/html/thumbnailer.py so that thumbnails in `images` will appear.
+6. Run /var/www/html/thumbnailer.py so that thumbnails in `images` will appear. (Thumbnailer runs on imagemagick. Ensure this is installed on your system)
 
 7a. Create cron job to run /var/www/html/thumbnailer.py.
       ex.  * 16 * * * /usr/bin/python /var/www/html/thumbnailer.py
