@@ -4,6 +4,8 @@ A responsive Apache index page.
 
 I was tired of seeing the ugly apache-generated index page, so I decided to do something about it. Inspired by [Seti UI](https://github.com/jesseweed/seti-ui) and [atom file-icons](https://github.com/file-icons/atom), this project adds an `.htaccess` file which tells apache to use a table, among other things, instead of `<pre>`.
 
+`This version allows for icons to be replaced with thumbnails on image and pdf files. It also includes a thumbnailer to use when dealing with larger images.`
+
 ### Before Fancy Index:
 ![before fancy index](before.png)
 
@@ -13,31 +15,32 @@ I was tired of seeing the ugly apache-generated index page, so I decided to do s
 
 ## Setup
 
-I'm going to assume you're using a `Sites` folder with apache, but it could be done differently. Wherever you see `USERNAME`, use your username.
+1. Clone `fancy-index` repo into /var/www/html or sub directory as desired (instructions will assume this directory).
 
-1. Clone or download the files.
-2. Add them to your `Sites` directory. The structure should be `/Users/USERNAME/Sites/fancy-index`.
-3. Copy the `.htaccess` file up one directory to `/Users/USERNAME/Sites/.htaccess`.
-3b. Move the `images` directory and `thumbnailer.py` up one level. Consider creating cron job for `thumbnailer.py`.
-4. Update your `DocumentRoot` in `/etc/apache2/users/USERNAME.conf` to point to your `Sites`. This will also cause `localhost` to point to `Sites` and you won't have to use the `~USERNAME` to access it.
+2. Move `images`, `thumbnailer.py`, and `.htaccess` up one level (/var/www/html).
 
-This is what mine looks like:
-```apache
-DocumentRoot "/Users/glen.cheney/Sites"
+3. Edit /etc/httpd/conf.d/welcome.conf so that every line is commented out.
 
-<Directory "/Users/glen.cheney/Sites">
+4. Edit /etc/httpd/conf.d/userdir.conf so that the final lines read:
+
+`<Directory "/var/www/html">
     AllowOverride All
-    Options Indexes MultiViews FollowSymLinks
+    Options MultiViews Indexes FollowSymLinks
     Require all granted
-</Directory>
+</Directory>`
 
-```
+5. Restart httpd
 
-5. Update `welcome.conf` file by commenting everything out.
+6. Run `thumbnailer.py` so that thumbnails in `images` will appear. 
+-Thumbnailer uses imagemagick. Ensure this is installed on your system.
+-Thumbnailer requires an argument specifying the root directory for images to convert. 
+ex:`python thumbnailer.py /var/www/html/images`
 
-Now restart apache `sudo apachectl restart`.
+7a. Create cron job to run `thumbnailer.py`.
+      ex.  `* 16 * * * /usr/bin/python /var/www/html/thumbnailer.py <path>`
+7b. Manually run `thumbnailer.py` after each change to `images` directory.
 
-If you're having trouble or don't see the correct files, follow one of these guides ([Yosemite](http://coolestguidesontheplanet.com/get-apache-mysql-php-phpmyadmin-working-osx-10-10-yosemite/), [El Capitan](http://coolestguidesontheplanet.com/get-apache-mysql-php-and-phpmyadmin-working-on-osx-10-11-el-capitan/), [Sierra](https://coolestguidesontheplanet.com/get-apache-mysql-php-and-phpmyadmin-working-on-macos-sierra/), [High Sierra](https://coolestguidesontheplanet.com/install-apache-mysql-php-and-phpmyadmin-on-macos-high-sierra-10-13/)) to get your Sites folder working.
+8. Drink all the beer!
 
 ## Mobile Comparison
 
