@@ -1,8 +1,10 @@
 #!/usr/bin/python
 import os
+import sys
 
 #rootDir = "/var/www/html/images"
-rootDir = sys.argv[0]
+rootDir = sys.argv[1]
+print("%s" % rootDir)
 
 for dirName, subdirList, fileList in os.walk(rootDir):
   subdirList[:] = [d for d in subdirList if not d[0] == '.'] 
