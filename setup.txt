@@ -13,10 +13,12 @@
 
 5. Restart httpd
 
-6. Run /var/www/html/thumbnailer.py so that thumbnails in `images` will appear. (Thumbnailer runs on imagemagick. Ensure this is installed on your system)
+6. Run /var/www/html/thumbnailer.py so that thumbnails in `images` will appear. 
+-Thumbnailer runs on imagemagick. Ensure this is installed on your system.
+-Thumbnailer requires an argument specifying the root directory for images to convert. ex:/var/www/html/images
 
 7a. Create cron job to run /var/www/html/thumbnailer.py.
-      ex.  * 16 * * * /usr/bin/python /var/www/html/thumbnailer.py
+      ex.  * 16 * * * /usr/bin/python /var/www/html/thumbnailer.py <path>
 7b. Manually run /var/www/html/thumbnailer.py after each change to `images` directory.
 
 8. Drink all the beer!
