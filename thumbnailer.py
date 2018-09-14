@@ -20,24 +20,29 @@ for dirName, subdirList, fileList in os.walk(rootDir):
     #add image file extensions
     if (filename.endswith(".jpg") or filename.endswith(".png") or filename.endswith(".svg") or filename.endswith(".jpeg")  or filename.endswith(".gif") or filename.endswith(".tiff") or filename.endswith(".bmp")):
       fileTime = float(os.path.getctime("%s/%s" % (dirName, filename)))
-      if(os.path.isfile("%s/.thumbnails/thumb.%s" % (dirName, filename))):
-        thumbTime = float(os.path.getctime("%s/.thumbnails/thumb.%s" % (dirName, filename)))
+      stripFile = os.path.splitext(os.path.basename(filename))[0]
+      if(os.path.isfile("%s/.thumbnails/thumb.%s.jpg" % (dirName, stripFile))):
+        thumbTime = float(os.path.getctime("%s/.thumbnails/thumb.%s.jpg" % (dirName, stripFile)))
       else:
         thumbTime = 0.0
       if (fileTime > thumbTime):
-          os.system("convert -thumbnail 256x256 %s/%s %s/.thumbnails/thumb.%s" % (dirName, filename, dirName, filename))
+          os.system("convert -thumbnail 256x256 %s/%s %s/.thumbnails/thumb.%s.jpg" % (dirName, filename, dirName, stripFile))
           continue
           
     #pdf thumbnailer      
     elif (filename.endswith(".pdf")):
       fileTime = float(os.path.getctime("%s/%s" % (dirName, filename)))
-      if(os.path.isfile("%s/.thumbnails/thumb.%s.bmp" % (dirName, filename))):
-        thumbTime = float(os.path.getctime("%s/.thumbnails/thumb.%s.bmp" % (dirName, filename)))
+      stripFile = os.path.splitext(os.path.basename(filename))[0]
+      if(os.path.isfile("%s/.thumbnails/thumb.%s.jpg" % (dirName, stripFile))):
+        thumbTime = float(os.path.getctime("%s/.thumbnails/thumb.%s.jpg" % (dirName, stripFile)))
       else:
         thumbTime = 0.0
       if (fileTime > thumbTime):
-        os.system("convert -thumbnail 256x256 %s/%s %s/.thumbnails/thumb.%s.bmp" % (dirName, filename, dirName, filename))
+        os.system("convert -colorspace sRGB %s/%s -scale 256x256 -background white -flatten %s/.thumbnails/thumb.%s.jpg" % (dirName, filename, dirName, stripFile))
         continue
             
     else:
       continue
+
+      
+      #print os.path.splitext(os.path.basename("hemanth.txt"))[0]

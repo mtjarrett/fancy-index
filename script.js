@@ -34,33 +34,16 @@ function fixTable() {
     || thumb=='jpeg'
     || thumb=='gif'
     || thumb=='tiff'
-    || thumb=='bmp') {      
+    || thumb=='bmp'
+    || thumb=='pdf') {      
       //if image is in the 'images' file, then it will use the image from '.thumbnails' as its thumbnail
       var image = document.createElement("img");      
-      image.setAttribute("src",".thumbnails/thumb." + thumbnail.split("/").pop());
-      image.setAttribute("onerror","this.onerror=null;this.src='../fancy-index/icons/file-media.svg';")
-      
+      image.setAttribute("src",".thumbnails/thumb." + thumbnail.split("/").pop().replace(/\.[^/.]+$/, "") + ".jpg");
       //all other files will use themselves as a thumbnail
       if(thumbnail.split('localhost/').pop().slice(0,6) != "images"){
         image.setAttribute("src",fileColumn.firstElementChild);
       }
-      
-    }else if (thumb=="pdf"){
-      
-      //if image is in the 'images' file, then it will use the image from '.thumbnails' as its thumbnail
-      var image = document.createElement("img");      
-      image.setAttribute("src",".thumbnails/thumb." + thumbnail.split("/").pop() + ".bmp");
-      image.setAttribute("onerror","this.onerror=null;this.src='../fancy-index/icons/file-pdf.svg';")
-      
-      //all other files will use themselves as a thumbnail
-      if(thumbnail.split('localhost/').pop().slice(0,6) != "images"){
-        image.setAttribute("src",fileColumn.firstElementChild);
-      }
-      
-      
-      
-      
-      
+
     //all file types that are not defined above will use themselves as a thumbnail  
     }else {
       var image = iconColumn.firstElementChild;
