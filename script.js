@@ -23,9 +23,15 @@ function fixTable() {
     // Remove icon column.
     row.removeChild(iconColumn);
 
+    
+    //back.svg icon for Parent Directory doesn't appear in grid, the following changes the file type to jpg
+    if(document.getElementsByTagName("img")[0].getAttribute("alt") == "[PARENTDIR]"){
+      document.getElementsByTagName("img")[0].setAttribute("src","/fancy-index/icons/back.jpg");
+    }
+
     //replaces default img icons with thumbnails
     const thumbnail = fileColumn.firstElementChild.href;
-
+      
     //list of image types that will be changed
     var thumb = thumbnail.split('.').pop();
     if (thumb=='jpg'
@@ -34,11 +40,15 @@ function fixTable() {
     || thumb=='jpeg'
     || thumb=='gif'
     || thumb=='tiff'
+    || thumb=='tif'
     || thumb=='bmp'
-    || thumb=='pdf') {      
-      //if image is in the 'images' file, then it will use the image from '.thumbnails' as its thumbnail
+    || thumb=='pdf') {
+
+      //if image is in the file defined by the thumbnailer or deeper, then it will use the image from '.thumbnails' as its thumbnail
       var image = document.createElement("img");      
       image.setAttribute("src",".thumbnails/thumb." + thumbnail.split("/").pop().replace(/\.[^/.]+$/, "") + ".jpg");
+      image.setAttribute("onerror","this.src = '/fancy-index/icons/file-media.svg'");
+      
       //all other files will use themselves as a thumbnail
       if(thumbnail.split('localhost/').pop().slice(0,6) != "images"){
         image.setAttribute("src",fileColumn.firstElementChild);
@@ -83,6 +93,15 @@ function titleize(str) {
 function addTitle() {
   let path = window.location.pathname.replace(/\/$/g, '');
   let titleText;
+  
+  //create 'parent directory' button
+  var parentImage = document.createElement("img");
+  parentImage.setAttribute("src", "/fancy-index/icons/back.jpg");
+  parentImage.setAttribute("height", "48px");
+  parentImage.setAttribute("id", "parentImage");
+  
+  
+  
 
   if (path) {
     const parts = path.split('/');
@@ -92,17 +111,21 @@ function addTitle() {
     titleText = window.location.host;
   }
 
-  titleText = `Index of ${titleText}`;
+  titleText = `${titleText}`;
 
   const container = document.createElement('div');
   container.id = 'page-header';
   const h1 = document.createElement('h1');
   h1.appendChild(document.createTextNode(titleText));
+  container.appendChild(parentImage);
   container.appendChild(h1);
 
   document.body.insertBefore(container, document.body.firstChild);
   document.title = titleText;
+  //adds link for parent directory image
+  $('#parentImage').wrap('<a href="../"></a>');
 }
+
 
 function getTimeSince(seconds) {
   let intervalType;
@@ -165,11 +188,11 @@ function fixTime() {
   });
 }
 
-function addSearch() {
+function addFilter() {
   const input = document.createElement('input');
-  input.type = 'search';
-  input.id = 'search';
-  input.setAttribute('placeholder', 'Search');
+  input.type = 'filter';
+  input.id = 'filter';
+  input.setAttribute('placeholder', 'Filter');
   document.getElementById('page-header').appendChild(input);
 
   const sortColumns = Array.from(document.querySelectorAll('thead a'));
@@ -178,8 +201,8 @@ function addSearch() {
   const fileNames = nameColumns.map(({ textContent }) => textContent);
 
   function filter(value) {
-    // Allow tabbing out of the search input and skipping the sort links
-    // when there is a search value.
+    // Allow tabbing out of the filter input and skipping the sort links
+    // when there is a filter value.
     sortColumns.forEach((link) => {
       if (value) {
         link.tabIndex = -1;
@@ -201,7 +224,7 @@ function addSearch() {
     });
   }
 
-  document.getElementById('search').addEventListener('input', ({ target }) => {
+  document.getElementById('filter').addEventListener('input', ({ target }) => {
     filter(target.value);
   });
 
@@ -297,14 +320,27 @@ function readCookie(state){
   
 }
 
+//Add parent directory image at top left
+function addParentImage(){
+  var parentImage = document.createElement("img");
+  parentImage.setAttribute("src", "/fancy-index/icons/back.jpg");
+  document.getElementById('page-header').appendChild(parentImage);
+}
+
+
+
+
+
+
+
 //order of elements at load
 
 fixTable();
 addTitle();
 fixTime();
-addButton("http://localhost/fancy-index/icons/list.png", 0);
-addButton("http://localhost/fancy-index/icons/grid.png", 7);
+addButton("/fancy-index/icons/list.png", 0);
+addButton("/fancy-index/icons/grid.png", 7);
 addSlider();
-addSearch();
+addFilter();
 imageLinks();
 readCookie(document.cookie.split("state=").pop());
