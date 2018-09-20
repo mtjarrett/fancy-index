@@ -1,10 +1,11 @@
 # Fancy Index
 
+`This fork allows for icons to be replaced with thumbnails of image and pdf files. It also includes a thumbnailer to use when dealing with larger images as well as a number of smaller features to improve UI such as grid/list view.`
+
 A responsive Apache index page.
 
 I was tired of seeing the ugly apache-generated index page, so I decided to do something about it. Inspired by [Seti UI](https://github.com/jesseweed/seti-ui) and [atom file-icons](https://github.com/file-icons/atom), this project adds an `.htaccess` file which tells apache to use a table, among other things, instead of `<pre>`.
 
-`This version allows for icons to be replaced with thumbnails on image and pdf files. It also includes a thumbnailer to use when dealing with larger images.`
 
 ### Before Fancy Index:
 ![before fancy index](before.png)
@@ -28,6 +29,7 @@ I was tired of seeing the ugly apache-generated index page, so I decided to do s
     Options MultiViews Indexes FollowSymLinks
     Require all granted
 </Directory>`
+Note: If security is an issue and you would rather not use .htaccess files, the contents of the included .htaccess file can be transfered to `httpd.conf`. If you do this, skip step 4.
 
 5. Restart httpd
 
