@@ -29,6 +29,12 @@ function fixTable() {
       document.getElementsByTagName("img")[0].setAttribute("src","/fancy-index/icons/back.jpg");
     }
 
+    
+    
+    
+    
+    
+    
     //replaces default img icons with thumbnails
     const thumbnail = fileColumn.firstElementChild.href;
       
@@ -48,21 +54,17 @@ function fixTable() {
       var image = document.createElement("img");      
       image.setAttribute("src",".thumbnails/thumb." + thumbnail.split("/").pop().replace(/\.[^/.]+$/, "") + ".jpg");
       image.setAttribute("onerror","this.src = '/fancy-index/icons/file-media.svg'");
-      
-      //all other files will use themselves as a thumbnail
-      if(thumbnail.split('localhost/').pop().slice(0,6) != "images"){
-        image.setAttribute("src",fileColumn.firstElementChild);
-      }
 
     //all file types that are not defined above will use themselves as a thumbnail  
     }else {
       var image = iconColumn.firstElementChild;
     }
+
     //if all else fails, return anyway
     if (!image) {
       return;
     }
-
+ 
     // Wrap icon in a div.img-wrap.
     const div = document.createElement('div');
     div.className = 'img-wrap';
