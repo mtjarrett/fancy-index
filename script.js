@@ -128,7 +128,6 @@ function addTitle() {
   $('#parentImage').wrap('<a href="../"></a>');
 }
 
-
 function getTimeSince(seconds) {
   let intervalType;
 
@@ -235,15 +234,16 @@ function addFilter() {
 
 //used to add grid and list buttons
 function addButton(buttonImg, toggle) {
-  const listButton = document.createElement("button");
-  listButton.setAttribute("type","button");      
-  listButton.setAttribute("background-image",buttonImg);
+  const viewButton = document.createElement("button");
+  viewButton.setAttribute("type","button");      
+  viewButton.setAttribute("background-image",buttonImg);
   var buttonImage = document.createElement("img");
   buttonImage.setAttribute("src", buttonImg);
   buttonImage.setAttribute("width","35px");
-  listButton.appendChild(buttonImage);
-  document.getElementById('page-header').appendChild(listButton);
-  listButton.onclick = function(){setCookie(toggle)};
+  viewButton.appendChild(buttonImage);
+  document.getElementById('page-header').appendChild(viewButton);
+  viewButton.onclick = function(){setCookie(toggle)};
+  
 }
 
 function buttonFunction(headDisplay,bodyDisplay,bodyWrap,fileDisplay,imgSize,imgDisplay,elemColor) {
@@ -277,11 +277,18 @@ function buttonFunction(headDisplay,bodyDisplay,bodyWrap,fileDisplay,imgSize,img
 
 function addSlider() {
   const sliderBar = document.createElement("input");
-  //sliderBar.setAttribute("type","range");      
+  //sliderBar.setAttribute("type","range"); 
+  sliderBar.setAttribute("id", "slider1");
   sliderBar.setAttribute("type","range"); 
   sliderBar.setAttribute("min","1"); 
   sliderBar.setAttribute("max","7"); 
-  sliderBar.setAttribute("value","4");
+  
+  if(document.cookie.split("state=").pop() == 0){
+    sliderBar.setAttribute("value","1");
+  }else{
+    sliderBar.setAttribute("value",document.cookie.split("state=").pop());
+  }
+  
   sliderBar.setAttribute("oninput","sliderFunction(this.value)");
   document.getElementById('page-header').appendChild(sliderBar);
   
@@ -297,10 +304,14 @@ function sliderFunction(value){
 function setCookie(toggle){
   document.cookie ='grid_state=' + toggle + '; path=/';
   readCookie(toggle);
+  console.log("toggle: " + toggle);
+  document.getElementById("slider1").value = toggle;
 }
 
 //0=list; 1-7=grid sizes
 function readCookie(state){
+  var sliderSet = document.getElementById('slider1');
+  sliderSet.setAttribute('value',state);
   
   if(state == 7){
     buttonFunction("none","flex","wrap","none","256px","flex","white");
@@ -318,8 +329,10 @@ function readCookie(state){
     buttonFunction("none","flex","wrap","none","64px","flex","white");
   } else {
     buttonFunction("","","","","48px","","");
+    sliderSet.setAttribute('value','1');
   }
-  
+  console.log("state: " + state);
+  console.log(document.getElementById('slider1').value);
 }
 
 //Add parent directory image at top left
@@ -328,12 +341,6 @@ function addParentImage(){
   parentImage.setAttribute("src", "/fancy-index/icons/back.jpg");
   document.getElementById('page-header').appendChild(parentImage);
 }
-
-
-
-
-
-
 
 //order of elements at load
 
