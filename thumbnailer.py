@@ -23,10 +23,10 @@ for dirName, subdirList, fileList in os.walk(rootDir):
       #filename = re.sub('*','\*', filename.rstrip())
       #add image file extensions
       if (filename.endswith(".jpg") or filename.endswith(".png") or filename.endswith(".svg") or filename.endswith(".jpeg")  or filename.endswith(".gif") or filename.endswith(".tiff") or filename.endswith(".bmp")):
-        fileTime = float(os.path.getctime("%s/%s" % (dirName, filename)))
+        fileTime = float(os.path.getctime("%s/\"%s\"" % (dirName, filename)))
         stripFile = os.path.splitext(os.path.basename(filename))[0]
-        if(os.path.isfile("%s/.thumbnails/thumb.%s.jpg" % (dirName, stripFile))):
-          thumbTime = float(os.path.getctime("%s/.thumbnails/thumb.%s.jpg" % (dirName, stripFile)))
+        if(os.path.isfile("%s/.thumbnails/thumb.\"%s\".jpg" % (dirName, stripFile))):
+          thumbTime = float(os.path.getctime("%s/.thumbnails/thumb.\"%s\".jpg" % (dirName, stripFile)))
         else:
           thumbTime = 0.0
         if (fileTime > thumbTime):
@@ -35,10 +35,10 @@ for dirName, subdirList, fileList in os.walk(rootDir):
 
       #pdf thumbnailer      
       elif (filename.endswith(".pdf")):
-        fileTime = float(os.path.getctime("%s/%s" % (dirName, filename)))
+        fileTime = float(os.path.getctime("%s/\"%s\"" % (dirName, filename)))
         stripFile = os.path.splitext(os.path.basename(filename))[0]
-        if(os.path.isfile("%s/.thumbnails/thumb.%s.jpg" % (dirName, stripFile))):
-          thumbTime = float(os.path.getctime("%s/.thumbnails/thumb.%s.jpg" % (dirName, stripFile)))
+        if(os.path.isfile("%s/.thumbnails/thumb.\"%s\".jpg" % (dirName, stripFile))):
+          thumbTime = float(os.path.getctime("%s/.thumbnails/thumb.\"%s\".jpg" % (dirName, stripFile)))
         else:
           thumbTime = 0.0
         if (fileTime > thumbTime):
