@@ -8,6 +8,7 @@ rootDir = sys.argv[1]
 
 #Recursive walkthrough from "rootDir"
 for dirName, subdirList, fileList in os.walk(rootDir):
+  print ("thumbnailing in directory: %s" % (dirName))
   #bypass any directories that don't allow writing. Will still be notified in terminal
   try:
     #ignore hidden folders (starting with ".")
