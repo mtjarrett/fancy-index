@@ -41,6 +41,7 @@ function fixTable() {
     //list of image types that will be changed
     var thumb = thumbnail.split('.').pop();
     if (thumb=='jpg'
+    || thumb=='JPG'
     || thumb=='png'
     || thumb=='svg'
     || thumb=='jpeg'
